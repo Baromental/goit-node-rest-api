@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import contactsRouter from "./routes/contactsRouter.js";
+import authRouter from "./routes/authRouter.js";
 
 const {DB_HOST, PORT = 3000} = process.env;
 
@@ -13,6 +14,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/user", authRouter)
 app.use("/api/contacts", contactsRouter);
 
 app.use((_, res) => {
