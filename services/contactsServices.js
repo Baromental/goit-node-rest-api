@@ -1,17 +1,15 @@
 // contactsServices.js
 import Contacts from "../models/Contacts.js";
 
-export const listContacts = () => Contacts.find();
+export const listContacts = ({ filter = {}, fields, setting = {} }) => 
+    Contacts.find(filter, fields, setting).populate("owner", "email subscription").populate("owner", "email subscription");
 
-export const getContactById = async(contactId)=>{
-    const contact = Contacts.findById({_id:contactId});
-    return contact;
-}
+export const getContact = filter => Contacts.findOne(filter)
 
-export const removeContact = async(contactId)=> Contacts.findByIdAndDelete(contactId);
+export const removeContact = async(filter)=> Contacts.findOneAndDelete(filter);
 
 export const addContact = (data) => Contacts.create(data);
 
-export const updateContactById = async(contactId, data)=> Contacts.findByIdAndUpdate(contactId, data);
+export const updateContact = async(filter, data)=> Contacts.findByOneAndUpdate(filter, data);
 
-export const updateStatusById = async (contactId, data) => Contacts.findByIdAndUpdate(contactId, data)
+export const updateStatus = async (filter, data) => Contacts.findOneAndUpdate(filter, data)
