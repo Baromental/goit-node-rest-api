@@ -18,7 +18,7 @@ const signUp = async(req, res)=> {
         throw HttpError(409, "Email in use")
     }
     const avatarURL = gravatar.url(email, { protocol: "https", s: "100" });
-    const newUser = await authServices.signUp({ email, password, avatarURL });
+    const newUser = await authServices.signUp({...req.body, avatarURL });
 
     res.status(201).json({
         username: newUser.username,
